@@ -91,7 +91,6 @@
         </a-breadcrumb>
         <a-layout-content>
           <router-view />
-          <affix />
         </a-layout-content>
         <a-layout-footer>
           <div style="display: flex; margin: 0 auto">
