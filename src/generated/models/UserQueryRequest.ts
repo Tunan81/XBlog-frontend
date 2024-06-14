@@ -2,14 +2,12 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 export type UserQueryRequest = {
-    id?: number;
     pageNumber?: number;
-    pageSize?: number;
-    sortField?: string;
-    sortOrder?: string;
+    id?: number;
     userName?: string;
     userProfile?: string;
     userRole?: string;
+    pageSize?: number;
 };
+

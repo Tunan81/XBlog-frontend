@@ -2,16 +2,15 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 import type { SaTokenInfo } from './SaTokenInfo';
-
 export type LoginUserVO = {
-    createTime?: string;
     id?: number;
-    token?: SaTokenInfo;
-    updateTime?: string;
-    userAvatar?: string;
     userName?: string;
+    userAvatar?: string;
+    token?: SaTokenInfo;
     userProfile?: string;
     userRole?: string;
+    createTime?: string;
+    updateTime?: string;
 };
+

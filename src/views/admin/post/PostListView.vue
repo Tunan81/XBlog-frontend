@@ -46,10 +46,10 @@ const columns = [
     slotName: 'content',
     width: 300
   },
-  {
-    title: '标签',
-    slotName: 'tags'
-  },
+  // {
+  //   title: '标签',
+  //   slotName: 'tags'
+  // },
   {
     title: '点赞数',
     dataIndex: 'thumbNum'

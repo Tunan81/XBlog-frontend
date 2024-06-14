@@ -2,17 +2,17 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 export type SaTokenInfo = {
-    isLogin?: boolean;
-    loginDevice?: string;
-    loginId?: any;
-    loginType?: string;
-    sessionTimeout?: number;
-    tag?: string;
-    tokenActiveTimeout?: number;
     tokenName?: string;
-    tokenSessionTimeout?: number;
-    tokenTimeout?: number;
     tokenValue?: string;
+    isLogin?: boolean;
+    loginId?: Record<string, any>;
+    loginType?: string;
+    tokenTimeout?: number;
+    sessionTimeout?: number;
+    tokenSessionTimeout?: number;
+    tokenActiveTimeout?: number;
+    loginDevice?: string;
+    tag?: string;
 };
+

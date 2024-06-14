@@ -7,173 +7,121 @@ import type { PostAddRequest } from '../models/PostAddRequest';
 import type { PostAdminQueryRequest } from '../models/PostAdminQueryRequest';
 import type { PostQueryRequest } from '../models/PostQueryRequest';
 import type { PostUpdateRequest } from '../models/PostUpdateRequest';
-import type { Result_boolean_ } from '../models/Result_boolean_';
-import type { Result_long_ } from '../models/Result_long_';
-import type { Result_Page_Post_ } from '../models/Result_Page_Post_';
-import type { Result_Page_PostVO_ } from '../models/Result_Page_PostVO_';
-import type { Result_PostVO_ } from '../models/Result_PostVO_';
-import type { Result_SearchVO_ } from '../models/Result_SearchVO_';
-import type { SearchRequest } from '../models/SearchRequest';
-
+import type { ResultBoolean } from '../models/ResultBoolean';
+import type { ResultListPost } from '../models/ResultListPost';
+import type { ResultLong } from '../models/ResultLong';
+import type { ResultPagePost } from '../models/ResultPagePost';
+import type { ResultPagePostVO } from '../models/ResultPagePostVO';
+import type { ResultPostVO } from '../models/ResultPostVO';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-
 export class PostControllerService {
-
     /**
-     * addPost
-     * @param postAddRequest postAddRequest
-     * @returns Result_long_ OK
-     * @returns any Created
+     * @param requestBody
+     * @returns ResultBoolean OK
      * @throws ApiError
      */
-    public static addPostUsingPost(
-postAddRequest: PostAddRequest,
-): CancelablePromise<Result_long_ | any> {
+    public static updatePost(
+        requestBody: PostUpdateRequest,
+    ): CancelablePromise<ResultBoolean> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/post/add',
-            body: postAddRequest,
-            errors: {
-                401: `Unauthorized`,
-                403: `Forbidden`,
-                404: `Not Found`,
+            url: '/post/update',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * @param categoryName
+     * @returns ResultListPost OK
+     * @throws ApiError
+     */
+    public static listPostVo(
+        categoryName: string,
+    ): CancelablePromise<ResultListPost> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/post/list/{categoryName}',
+            path: {
+                'categoryName': categoryName,
             },
         });
     }
-
     /**
-     * deletePost
-     * @param deleteRequest deleteRequest
-     * @returns Result_boolean_ OK
-     * @returns any Created
+     * @param requestBody
+     * @returns ResultPagePost OK
      * @throws ApiError
      */
-    public static deletePostUsingPost(
-deleteRequest: DeleteRequest,
-): CancelablePromise<Result_boolean_ | any> {
+    public static listPostByPage(
+        requestBody: PostAdminQueryRequest,
+    ): CancelablePromise<ResultPagePost> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/post/delete',
-            body: deleteRequest,
-            errors: {
-                401: `Unauthorized`,
-                403: `Forbidden`,
-                404: `Not Found`,
-            },
+            url: '/post/list/page',
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
-
     /**
-     * getPostVOById
-     * @param id id
-     * @returns Result_PostVO_ OK
+     * @param requestBody
+     * @returns ResultPagePostVO OK
      * @throws ApiError
      */
-    public static getPostVoByIdUsingGet(
-id?: number,
-): CancelablePromise<Result_PostVO_> {
+    public static listPostVoByPage(
+        requestBody: PostQueryRequest,
+    ): CancelablePromise<ResultPagePostVO> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/post/list/page/vo',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * @param requestBody
+     * @returns ResultBoolean OK
+     * @throws ApiError
+     */
+    public static deletePost(
+        requestBody: DeleteRequest,
+    ): CancelablePromise<ResultBoolean> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/post/delete',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * @param requestBody
+     * @returns ResultLong OK
+     * @throws ApiError
+     */
+    public static addPost(
+        requestBody: PostAddRequest,
+    ): CancelablePromise<ResultLong> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/post/add',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * @param id
+     * @returns ResultPostVO OK
+     * @throws ApiError
+     */
+    public static getPostVoById(
+        id: number,
+    ): CancelablePromise<ResultPostVO> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/post/get/vo',
-            query: {
+            url: '/post/get/vo/{id}',
+            path: {
                 'id': id,
             },
-            errors: {
-                401: `Unauthorized`,
-                403: `Forbidden`,
-                404: `Not Found`,
-            },
         });
     }
-
-    /**
-     * listPostByPage
-     * @param postQueryRequest postQueryRequest
-     * @returns Result_Page_Post_ OK
-     * @returns any Created
-     * @throws ApiError
-     */
-    public static listPostByPageUsingPost(
-postQueryRequest: PostAdminQueryRequest,
-): CancelablePromise<Result_Page_Post_ | any> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/post/list/page',
-            body: postQueryRequest,
-            errors: {
-                401: `Unauthorized`,
-                403: `Forbidden`,
-                404: `Not Found`,
-            },
-        });
-    }
-
-    /**
-     * listPostVOByPage
-     * @param postQueryRequest postQueryRequest
-     * @returns Result_Page_PostVO_ OK
-     * @returns any Created
-     * @throws ApiError
-     */
-    public static listPostVoByPageUsingPost(
-postQueryRequest: PostQueryRequest,
-): CancelablePromise<Result_Page_PostVO_ | any> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/post/list/page/vo',
-            body: postQueryRequest,
-            errors: {
-                401: `Unauthorized`,
-                403: `Forbidden`,
-                404: `Not Found`,
-            },
-        });
-    }
-
-    /**
-     * searchAll
-     * @param searchRequest searchRequest
-     * @returns Result_SearchVO_ OK
-     * @returns any Created
-     * @throws ApiError
-     */
-    public static searchAllUsingPost(
-searchRequest: SearchRequest,
-): CancelablePromise<Result_SearchVO_ | any> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/post/search/all',
-            body: searchRequest,
-            errors: {
-                401: `Unauthorized`,
-                403: `Forbidden`,
-                404: `Not Found`,
-            },
-        });
-    }
-
-    /**
-     * updatePost
-     * @param postUpdateRequest postUpdateRequest
-     * @returns Result_boolean_ OK
-     * @returns any Created
-     * @throws ApiError
-     */
-    public static updatePostUsingPost(
-postUpdateRequest: PostUpdateRequest,
-): CancelablePromise<Result_boolean_ | any> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/post/update',
-            body: postUpdateRequest,
-            errors: {
-                401: `Unauthorized`,
-                403: `Forbidden`,
-                404: `Not Found`,
-            },
-        });
-    }
-
 }

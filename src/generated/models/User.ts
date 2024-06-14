@@ -2,26 +2,26 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 export type User = {
-    address?: string;
-    birthday?: string;
-    company?: string;
-    createTime?: string;
-    email?: string;
-    gender?: number;
     id?: number;
-    isDelete?: number;
-    phone?: string;
-    position?: string;
-    school?: string;
-    tags?: string;
-    updateTime?: string;
     userAccount?: string;
-    userAvatar?: string;
-    userName?: string;
     userPassword?: string;
+    userName?: string;
+    userAvatar?: string;
     userProfile?: string;
     userRole?: string;
+    gender?: number;
+    address?: string;
+    tags?: string;
+    birthday?: string;
+    company?: string;
+    position?: string;
+    school?: string;
+    phone?: string;
+    email?: string;
     website?: string;
+    createTime?: string;
+    updateTime?: string;
+    isDelete?: number;
 };
+

@@ -26,7 +26,7 @@
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.4",
     "tea-design": "^0.8.5",
-    "undraw-ui": "1.0.7",
+    "undraw-ui": "^1.1.4",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",
     "vue3-puzzle-vcode": "^1.1.7",

@@ -2,17 +2,19 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 export type Post = {
-    content?: string;
-    cover?: string;
-    createTime?: string;
-    delete?: boolean;
-    favourNum?: number;
     id?: number;
-    tags?: string;
-    thumbNum?: number;
     title?: string;
-    updateTime?: string;
+    content?: string;
+    categoryId?: number;
+    categoryName?: string;
+    tags?: string;
+    cover?: string;
+    thumbNum?: number;
+    favourNum?: number;
     userId?: number;
+    createTime?: string;
+    updateTime?: string;
+    delete?: boolean;
 };
+

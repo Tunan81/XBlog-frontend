@@ -29,7 +29,7 @@ export const routes: Array<RouteRecordRaw> = [
     meta: { title: 'Blog',layout: BasicLayout }
   },
   {
-    path: '/read/:slug/:id',
+    path: '/read/:category/:id',
     name: 'articleDetail',
     component: () => import('../views/ArticleView.vue'),
     meta: { title: 'Blog',layout: BasicLayout }

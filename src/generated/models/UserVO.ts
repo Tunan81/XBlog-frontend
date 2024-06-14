@@ -2,23 +2,23 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 export type UserVO = {
-    address?: string;
-    birthday?: string;
-    company?: string;
-    createTime?: string;
-    email?: string;
-    gender?: number;
     id?: number;
-    phone?: string;
-    position?: string;
-    school?: string;
-    tags?: string;
-    userAccount?: string;
-    userAvatar?: string;
     userName?: string;
+    userAvatar?: string;
     userProfile?: string;
     userRole?: string;
+    userAccount?: string;
+    gender?: number;
+    address?: string;
+    tags?: string;
+    birthday?: string;
+    company?: string;
+    position?: string;
+    school?: string;
+    phone?: string;
+    email?: string;
     website?: string;
+    createTime?: string;
 };
+

@@ -14,7 +14,7 @@
       <p class="text-white pr-4 fade-in-from-left">Welcome to My personal website. <span class="wave">👋🏼</span>
       </p>
       <br>
-      <a href="http://dow.paimona.top" target="_blank"
+      <a href="http://doc.paimona.top" target="_blank"
          class="fadein-bot fade-500 flex items-center py-2 px-4 mx-auto text-sm font-medium rounded-lg border transition duration-300 md:py-2.5 md:px-5 md:mx-0 text-amber-200 border-amber-200 hover:bg-amber-200 hover:bg-opacity-10 bg-transparent focus:outline-none w-fit">
         个人主页</a>
       <button

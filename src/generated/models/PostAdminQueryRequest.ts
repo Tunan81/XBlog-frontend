@@ -2,12 +2,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 export type PostAdminQueryRequest = {
-    content?: string;
     pageNumber?: number;
-    pageSize?: number;
-    sortField?: string;
-    sortOrder?: string;
     title?: string;
+    content?: string;
+    pageSize?: number;
 };
+

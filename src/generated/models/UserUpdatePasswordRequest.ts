@@ -2,8 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 export type UserUpdatePasswordRequest = {
-    newPassword?: string;
     oldPassword?: string;
+    newPassword?: string;
 };
+

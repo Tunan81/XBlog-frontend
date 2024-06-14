@@ -2,19 +2,17 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-
 export type PostQueryRequest = {
-    content?: string;
-    favourUserId?: number;
+    pageNumber?: number;
     id?: number;
     notId?: number;
-    orTags?: Array<string>;
-    pageNumber?: number;
-    pageSize?: number;
     searchText?: string;
-    sortField?: string;
-    sortOrder?: string;
-    tags?: Array<string>;
     title?: string;
+    content?: string;
+    tags?: Array<string>;
+    orTags?: Array<string>;
     userId?: number;
+    favourUserId?: number;
+    pageSize?: number;
 };
+

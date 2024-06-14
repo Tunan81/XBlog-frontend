@@ -4,7 +4,7 @@
       <div class="w-full md:w-2/3">
         <div class="flex flex-col gap-4 md:px-20 fade-zoom-up">
           <article v-for="article in articles" :key="article.id">
-            <router-link :to="`/read/${article.slug}/${article.id}`"
+            <router-link :to="`/read/${article.category}/${article.id}`"
                          class="flex w-full bg-[#1e1e1f] border-[#383838] rounded-xl text-left text-white p-5 md:py-7 md:px-8 cursor-pointer hover:bg-[#282828] items-center">
               <div class="w-full pr-4">
                 <div class="text-xs mb-1 text-slate-400 flex items-center italic">
@@ -68,7 +68,7 @@ export default {
         {
         "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed cursus.",
         "desc": "Vestibulum auctor ullamcorper enim ut vestibulum. Aliquam erat volutpat. Maecenas ac pulvinar turpis. Etiam imperdiet mi in nisi faucibus, non fermentum ipsum vulputate. Proin dictum tempus justo vitae auctor. Phasellus non dapibus mauris. Fusce tristique in purus ut vehicula. Phasellus condimentum scelerisque urna, at cursus nunc fermentum non. Aenean ut enim iaculis, tincidunt nisl at, pellentesque justo. Nullam rhoncus, mauris ac elementum accumsan, purus arcu convallis leo, nec ornare massa ligula a massa. Ut vitae imperdiet eros, at consequat tellus. Etiam non sollicitudin ante, eget ullamcorper nulla. Nunc ut felis arcu. Praesent efficitur imperdiet hendrerit. Nullam eu elit augue. Vivamus..",
-        "slug": "excepturi-architecto-quos",
+        "slug": "excepturi-architecto-quos",`1`
         "image": "https://picsum.photos/600/450",
         "date": "Mei 12, 2023",
         "content": "Content 1",

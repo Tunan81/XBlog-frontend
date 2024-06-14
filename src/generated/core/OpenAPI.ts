@@ -20,8 +20,8 @@ export type OpenAPIConfig = {
 };
 
 export const OpenAPI: OpenAPIConfig = {
-    BASE: 'http://www.paimona.top',
-    VERSION: '1.0',
+    BASE: 'http://localhost:8101/api',
+    VERSION: '1',
     WITH_CREDENTIALS: false,
     CREDENTIALS: 'include',
     TOKEN: undefined,

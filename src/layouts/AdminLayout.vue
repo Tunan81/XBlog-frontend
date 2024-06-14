@@ -1,9 +1,10 @@
 <template>
   <a-layout class="layout-demo">
     <a-layout-sider class="container-sider" theme="light" :collapsed="!isSidebarOpen" :trigger="null">
+      <HeaderLogo :isSidebarOpen="isSidebarOpen" />
       <a-menu
         :default-selected-keys="['home']"
-        :style="{ width: '100%' }"
+        style="width: 100%;"
         @menu-item-click="onClickMenuItem"
       >
         <a-menu-item key="home">
@@ -110,6 +111,7 @@
 import router from '@/router'
 import { ref, watchEffect } from 'vue'
 import { useMenuStore } from '@/stores/menu'
+import HeaderLogo from '@/layouts/header/HeaderLogo.vue'
 
 
 const menuStore = useMenuStore()

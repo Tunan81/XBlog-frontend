@@ -3,14 +3,14 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { DeleteRequest } from '../models/DeleteRequest';
-import type { Result_boolean_ } from '../models/Result_boolean_';
-import type { Result_LoginUserVO_ } from '../models/Result_LoginUserVO_';
-import type { Result_long_ } from '../models/Result_long_';
-import type { Result_Page_User_ } from '../models/Result_Page_User_';
-import type { Result_Page_UserVO_ } from '../models/Result_Page_UserVO_';
-import type { Result_string_ } from '../models/Result_string_';
-import type { Result_User_ } from '../models/Result_User_';
-import type { Result_UserVO_ } from '../models/Result_UserVO_';
+import type { ResultBoolean } from '../models/ResultBoolean';
+import type { ResultLoginUserVO } from '../models/ResultLoginUserVO';
+import type { ResultLong } from '../models/ResultLong';
+import type { ResultPageUser } from '../models/ResultPageUser';
+import type { ResultPageUserVO } from '../models/ResultPageUserVO';
+import type { ResultString } from '../models/ResultString';
+import type { ResultUser } from '../models/ResultUser';
+import type { ResultUserVO } from '../models/ResultUserVO';
 import type { UserAddRequest } from '../models/UserAddRequest';
 import type { UserLoginRequest } from '../models/UserLoginRequest';
 import type { UserQueryRequest } from '../models/UserQueryRequest';
@@ -18,329 +18,222 @@ import type { UserRegisterRequest } from '../models/UserRegisterRequest';
 import type { UserUpdateMyRequest } from '../models/UserUpdateMyRequest';
 import type { UserUpdatePasswordRequest } from '../models/UserUpdatePasswordRequest';
 import type { UserUpdateRequest } from '../models/UserUpdateRequest';
-
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-
 export class UserControllerService {
-
     /**
-     * addUser
-     * @param userAddRequest userAddRequest
-     * @returns Result_long_ OK
-     * @returns any Created
+     * @param requestBody
+     * @returns ResultString OK
      * @throws ApiError
      */
-    public static addUserUsingPost(
-userAddRequest: UserAddRequest,
-): CancelablePromise<Result_long_ | any> {
+    public static uploadAvatar(
+        requestBody?: {
+            file: Blob;
+        },
+    ): CancelablePromise<ResultString> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/user/add',
-            body: userAddRequest,
-            errors: {
-                401: `Unauthorized`,
-                403: `Forbidden`,
-                404: `Not Found`,
-            },
+            url: '/user/upload/avatar',
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
-
     /**
-     * deleteUser
-     * @param deleteRequest deleteRequest
-     * @returns Result_boolean_ OK
-     * @returns any Created
+     * @param requestBody
+     * @returns ResultBoolean OK
      * @throws ApiError
      */
-    public static deleteUserUsingPost(
-deleteRequest: DeleteRequest,
-): CancelablePromise<Result_boolean_ | any> {
+    public static updateUser(
+        requestBody: UserUpdateRequest,
+    ): CancelablePromise<ResultBoolean> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/user/delete',
-            body: deleteRequest,
-            errors: {
-                401: `Unauthorized`,
-                403: `Forbidden`,
-                404: `Not Found`,
-            },
+            url: '/user/update',
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
-
     /**
-     * getUserById
-     * @param id id
-     * @returns Result_User_ OK
+     * @param requestBody
+     * @returns ResultBoolean OK
      * @throws ApiError
      */
-    public static getUserByIdUsingGet(
-id?: number,
-): CancelablePromise<Result_User_> {
+    public static updatePassword(
+        requestBody: UserUpdatePasswordRequest,
+    ): CancelablePromise<ResultBoolean> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/user/update/password',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * @param requestBody
+     * @returns ResultBoolean OK
+     * @throws ApiError
+     */
+    public static updateMyUser(
+        requestBody: UserUpdateMyRequest,
+    ): CancelablePromise<ResultBoolean> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/user/update/my',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * @param requestBody
+     * @returns ResultLong OK
+     * @throws ApiError
+     */
+    public static userRegister(
+        requestBody: UserRegisterRequest,
+    ): CancelablePromise<ResultLong> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/user/register',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * @returns ResultBoolean OK
+     * @throws ApiError
+     */
+    public static userLogout(): CancelablePromise<ResultBoolean> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/user/logout',
+        });
+    }
+    /**
+     * @param requestBody
+     * @returns ResultLoginUserVO OK
+     * @throws ApiError
+     */
+    public static userLogin(
+        requestBody: UserLoginRequest,
+    ): CancelablePromise<ResultLoginUserVO> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/user/login',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * @param requestBody
+     * @returns ResultPageUser OK
+     * @throws ApiError
+     */
+    public static listUserByPage(
+        requestBody: UserQueryRequest,
+    ): CancelablePromise<ResultPageUser> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/user/list/page',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * @param requestBody
+     * @returns ResultPageUserVO OK
+     * @throws ApiError
+     */
+    public static listUserVoByPage(
+        requestBody: UserQueryRequest,
+    ): CancelablePromise<ResultPageUserVO> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/user/list/page/vo',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * @param requestBody
+     * @returns ResultBoolean OK
+     * @throws ApiError
+     */
+    public static deleteUser(
+        requestBody: DeleteRequest,
+    ): CancelablePromise<ResultBoolean> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/user/delete',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * @param requestBody
+     * @returns ResultLong OK
+     * @throws ApiError
+     */
+    public static addUser(
+        requestBody: UserAddRequest,
+    ): CancelablePromise<ResultLong> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/user/add',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+    /**
+     * @param id
+     * @returns ResultUser OK
+     * @throws ApiError
+     */
+    public static getUserById(
+        id: number,
+    ): CancelablePromise<ResultUser> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/user/get',
+            url: '/user/get',
             query: {
                 'id': id,
             },
-            errors: {
-                401: `Unauthorized`,
-                403: `Forbidden`,
-                404: `Not Found`,
-            },
         });
     }
-
     /**
-     * getLoginUser
-     * @returns Result_LoginUserVO_ OK
+     * @param id
+     * @returns ResultUserVO OK
      * @throws ApiError
      */
-    public static getLoginUserUsingGet(): CancelablePromise<Result_LoginUserVO_> {
+    public static getUserVoById(
+        id: number,
+    ): CancelablePromise<ResultUserVO> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/user/get/login',
-            errors: {
-                401: `Unauthorized`,
-                403: `Forbidden`,
-                404: `Not Found`,
-            },
-        });
-    }
-
-    /**
-     * getMyUser
-     * @returns Result_UserVO_ OK
-     * @throws ApiError
-     */
-    public static getMyUserUsingGet(): CancelablePromise<Result_UserVO_> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/user/get/my',
-            errors: {
-                401: `Unauthorized`,
-                403: `Forbidden`,
-                404: `Not Found`,
-            },
-        });
-    }
-
-    /**
-     * getUserVOById
-     * @param id id
-     * @returns Result_UserVO_ OK
-     * @throws ApiError
-     */
-    public static getUserVoByIdUsingGet(
-id?: number,
-): CancelablePromise<Result_UserVO_> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/user/get/vo',
+            url: '/user/get/vo',
             query: {
                 'id': id,
             },
-            errors: {
-                401: `Unauthorized`,
-                403: `Forbidden`,
-                404: `Not Found`,
-            },
         });
     }
-
     /**
-     * listUserByPage
-     * @param userQueryRequest userQueryRequest
-     * @returns Result_Page_User_ OK
-     * @returns any Created
+     * @returns ResultUserVO OK
      * @throws ApiError
      */
-    public static listUserByPageUsingPost(
-userQueryRequest: UserQueryRequest,
-): CancelablePromise<Result_Page_User_ | any> {
+    public static getMyUser(): CancelablePromise<ResultUserVO> {
         return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/user/list/page',
-            body: userQueryRequest,
-            errors: {
-                401: `Unauthorized`,
-                403: `Forbidden`,
-                404: `Not Found`,
-            },
+            method: 'GET',
+            url: '/user/get/my',
         });
     }
-
     /**
-     * listUserVOByPage
-     * @param userQueryRequest userQueryRequest
-     * @returns Result_Page_UserVO_ OK
-     * @returns any Created
+     * @returns ResultLoginUserVO OK
      * @throws ApiError
      */
-    public static listUserVoByPageUsingPost(
-userQueryRequest: UserQueryRequest,
-): CancelablePromise<Result_Page_UserVO_ | any> {
+    public static getLoginUser(): CancelablePromise<ResultLoginUserVO> {
         return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/user/list/page/vo',
-            body: userQueryRequest,
-            errors: {
-                401: `Unauthorized`,
-                403: `Forbidden`,
-                404: `Not Found`,
-            },
+            method: 'GET',
+            url: '/user/get/login',
         });
     }
-
-    /**
-     * userLogin
-     * @param userLoginRequest userLoginRequest
-     * @returns Result_LoginUserVO_ OK
-     * @returns any Created
-     * @throws ApiError
-     */
-    public static userLoginUsingPost(
-userLoginRequest: UserLoginRequest,
-): CancelablePromise<Result_LoginUserVO_ | any> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/user/login',
-            body: userLoginRequest,
-            errors: {
-                401: `Unauthorized`,
-                403: `Forbidden`,
-                404: `Not Found`,
-            },
-        });
-    }
-
-    /**
-     * userLogout
-     * @returns Result_boolean_ OK
-     * @returns any Created
-     * @throws ApiError
-     */
-    public static userLogoutUsingPost(): CancelablePromise<Result_boolean_ | any> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/user/logout',
-            errors: {
-                401: `Unauthorized`,
-                403: `Forbidden`,
-                404: `Not Found`,
-            },
-        });
-    }
-
-    /**
-     * userRegister
-     * @param userRegisterRequest userRegisterRequest
-     * @returns Result_long_ OK
-     * @returns any Created
-     * @throws ApiError
-     */
-    public static userRegisterUsingPost(
-userRegisterRequest: UserRegisterRequest,
-): CancelablePromise<Result_long_ | any> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/user/register',
-            body: userRegisterRequest,
-            errors: {
-                401: `Unauthorized`,
-                403: `Forbidden`,
-                404: `Not Found`,
-            },
-        });
-    }
-
-    /**
-     * updateUser
-     * @param userUpdateRequest userUpdateRequest
-     * @returns Result_boolean_ OK
-     * @returns any Created
-     * @throws ApiError
-     */
-    public static updateUserUsingPost(
-userUpdateRequest: UserUpdateRequest,
-): CancelablePromise<Result_boolean_ | any> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/user/update',
-            body: userUpdateRequest,
-            errors: {
-                401: `Unauthorized`,
-                403: `Forbidden`,
-                404: `Not Found`,
-            },
-        });
-    }
-
-    /**
-     * updateMyUser
-     * @param userUpdateMyRequest userUpdateMyRequest
-     * @returns Result_boolean_ OK
-     * @returns any Created
-     * @throws ApiError
-     */
-    public static updateMyUserUsingPost(
-userUpdateMyRequest: UserUpdateMyRequest,
-): CancelablePromise<Result_boolean_ | any> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/user/update/my',
-            body: userUpdateMyRequest,
-            errors: {
-                401: `Unauthorized`,
-                403: `Forbidden`,
-                404: `Not Found`,
-            },
-        });
-    }
-
-    /**
-     * updatePassword
-     * @param userUpdatePasswordRequest userUpdatePasswordRequest
-     * @returns Result_boolean_ OK
-     * @returns any Created
-     * @throws ApiError
-     */
-    public static updatePasswordUsingPost(
-userUpdatePasswordRequest: UserUpdatePasswordRequest,
-): CancelablePromise<Result_boolean_ | any> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/user/update/password',
-            body: userUpdatePasswordRequest,
-            errors: {
-                401: `Unauthorized`,
-                403: `Forbidden`,
-                404: `Not Found`,
-            },
-        });
-    }
-
-    /**
-     * uploadAvatar
-     * @param file file
-     * @returns Result_string_ OK
-     * @returns any Created
-     * @throws ApiError
-     */
-    public static uploadAvatarUsingPost(
-file: Blob,
-): CancelablePromise<Result_string_ | any> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/user/upload/avatar',
-            body: file,
-            errors: {
-                401: `Unauthorized`,
-                403: `Forbidden`,
-                404: `Not Found`,
-            },
-        });
-    }
-
 }
