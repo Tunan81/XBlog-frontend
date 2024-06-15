@@ -75,7 +75,7 @@ const search = () => {
 }
 
 const fetchData = async () => {
-  const res = await PostControllerService.listPostByPageUsingPost(
+  const res = await PostControllerService.listPostByPage(
     searchParams.value
   )
   if (res.code === 0) {

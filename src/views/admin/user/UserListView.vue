@@ -69,7 +69,7 @@ const search = () => {
 }
 
 const fetchData = async () => {
-  const res = await UserControllerService.listUserVoByPageUsingPost(
+  const res = await UserControllerService.listUserByPage(
     searchParams.value
   )
   if (res.code === 0) {

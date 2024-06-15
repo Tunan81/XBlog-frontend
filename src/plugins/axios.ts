@@ -8,7 +8,7 @@ OpenAPI.WITH_CREDENTIALS = true
 // 打包后自动切换环境
 const baseUrl =
   process.env.NODE_ENV === 'development'
-    ? 'http://localhost:8101'
+    ? 'http://localhost:8101/api'
     : 'http://115.159.96.13:8101' // 生产环境
 
 OpenAPI.BASE = baseUrl

@@ -33,7 +33,7 @@ const config = reactive<ConfigApi>({
 const pageNum = ref(1)
 const pageSize = ref(5)
 const props = defineProps({
-  questionId: {
+  postId: {
     type: Number,
     default: 0
   }
@@ -44,7 +44,7 @@ const loadData = async () => {
   const res = await PostCommentControllerService.page(
     pageNum.value,
     pageSize.value,
-    props.questionId
+    props.postId
   )
   if (res.code === 0) {
     const data: any = res.data
@@ -74,7 +74,7 @@ const submit = async ({ content, parentId, finish }: any) => {
     return
   }
   const formData = {
-    questionId: props.questionId,
+    postId: props.postId,
     content: content,
     parentId: parentId
   }

@@ -13,7 +13,7 @@
         </div>
         <div class="text-left text-black mt-8">
           <MdView :value="content" />
-          <commentView :question-id="1"/>
+          <commentView :postId="postId"/>
         </div>
       </div>
     </div>
@@ -33,7 +33,8 @@ export default {
       title: '',
       cover: '',
       date: '',
-      content: ''
+      content: '',
+      postId: useRoute().params.id,
     }
   },
   mounted() {
@@ -41,6 +42,7 @@ export default {
   },
   methods: {
     async getDetails() {
+      console.log(this.route)
       const id = this.route.params.id
       axios.get('http://localhost:8101/api/post/get/vo/' + id)
         .then(response => {

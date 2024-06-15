@@ -27,14 +27,14 @@ export class PostCommentControllerService {
     /**
      * @param pageNum
      * @param pageSize
-     * @param questionId
+     * @param postId
      * @returns ResultListPostComment OK
      * @throws ApiError
      */
     public static page(
         pageNum: number,
         pageSize: number,
-        questionId: number,
+        postId: number,
     ): CancelablePromise<ResultListPostComment> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -44,7 +44,7 @@ export class PostCommentControllerService {
                 'pageSize': pageSize,
             },
             query: {
-                'questionId': questionId,
+                'postId': postId,
             },
         });
     }

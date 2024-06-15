@@ -4,7 +4,7 @@
       <div class="w-full md:w-2/3">
         <div class="flex flex-col gap-4 md:px-20 fade-zoom-up">
           <article v-for="article in articles" :key="article.id">
-            <router-link :to="`/read/${article.category}/${article.id}`"
+            <router-link :to="`/read/${article.categoryName}/${article.id}`"
                          class="flex w-full bg-[#1e1e1f] border-[#383838] rounded-xl text-left text-white p-5 md:py-7 md:px-8 cursor-pointer hover:bg-[#282828] items-center">
               <div class="w-full pr-4">
                 <div class="text-xs mb-1 text-slate-400 flex items-center italic">
