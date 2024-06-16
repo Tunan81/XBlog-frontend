@@ -37,7 +37,6 @@ export type { ResultPagePostVO } from './models/ResultPagePostVO';
 export type { ResultPageUser } from './models/ResultPageUser';
 export type { ResultPageUserVO } from './models/ResultPageUserVO';
 export type { ResultPostVO } from './models/ResultPostVO';
-export type { ResultString } from './models/ResultString';
 export type { ResultUser } from './models/ResultUser';
 export type { ResultUserVO } from './models/ResultUserVO';
 export type { SaTokenInfo } from './models/SaTokenInfo';
@@ -47,7 +46,6 @@ export type { UserLoginRequest } from './models/UserLoginRequest';
 export type { UserQueryRequest } from './models/UserQueryRequest';
 export type { UserRegisterRequest } from './models/UserRegisterRequest';
 export type { UserUpdateMyRequest } from './models/UserUpdateMyRequest';
-export type { UserUpdatePasswordRequest } from './models/UserUpdatePasswordRequest';
 export type { UserUpdateRequest } from './models/UserUpdateRequest';
 export type { UserVO } from './models/UserVO';
 

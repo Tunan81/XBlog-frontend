@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { computed, reactive, ref, watchEffect } from 'vue'
+import { computed, ref, watchEffect } from 'vue'
 import { UserControllerService, UserQueryRequest } from '@/generated'
+import { Message } from '@arco-design/web-vue'
 
 type SizeProps = 'mini' | 'small' | 'medium' | 'large';
 const size = ref<SizeProps>('medium')
-const userList = ref([])
+const userList = ref([] as any)
 const densityList = computed(() => [
   {
     name: '迷你',
@@ -25,21 +26,16 @@ const densityList = computed(() => [
 ])
 // 查询参数
 const searchParams = ref<UserQueryRequest>({
-  pageSize: 10,
   pageNumber: 1,
+  pageSize: 10,
   userName: '',
-  userRole: ''
+  userRole: undefined,
+  userGender: undefined,
+  startTime: '',
+  endTime: ''
 })
 
 const columns = [
-  {
-    title: '#id',
-    dataIndex: 'id'
-  },
-  {
-    title: '账号',
-    dataIndex: 'userAccount'
-  },
   {
     title: '用户名',
     dataIndex: 'userName'
@@ -62,7 +58,7 @@ const columns = [
   }
 ]
 
-const total = ref(0)
+const total = ref(0 as any)
 
 const search = () => {
   fetchData()
@@ -73,8 +69,8 @@ const fetchData = async () => {
     searchParams.value
   )
   if (res.code === 0) {
-    userList.value = res.data.records
-    total.value = parseInt(res.data.totalRow)
+    userList.value = res.data?.records
+    total.value = parseInt(res.data?.totalRow as any)
   } else {
     console.error('获取数据失败' + res.message)
   }
@@ -103,12 +99,109 @@ const handleSelectDensity = (
   size.value = val as SizeProps
 }
 
-const doDeleteUser = (record: any) => {
-  console.log(record)
+const doDeleteUser = async (record: any) => {
+  const res = await UserControllerService.deleteUser(record.userId)
+  if (res.code === 0) {
+    Message.success('删除成功')
+    fetchData()
+  } else {
+    Message.error('删除失败' + res.message)
+  }
 }
 
+// region 新增用户
+const visible = ref(false)
+const form = ref({
+  userName: '',
+  userRole: undefined
+})
+
+const handleClick = () => {
+  visible.value = true
+}
+
+const handleOk = async () => {
+  if (form.value.userName === '') {
+    Message.error('用户名不能为空')
+    return
+  }
+  if (form.value.userRole === undefined) {
+    Message.error('角色不能为空')
+    return
+  }
+  const res = await UserControllerService.addUser({
+    userName: form.value.userName,
+    userRole: form.value.userRole
+  })
+  if (res.code === 0) {
+    Message.success('新增成功')
+    visible.value = false
+    form.value = {
+      userName: '',
+      userRole: undefined
+    }
+    fetchData()
+  } else {
+    Message.error('新增失败' + res.message)
+  }
+}
+
+const handleCancel = () => {
+  visible.value = false
+  form.value = {
+    userName: '',
+    userRole: undefined
+  }
+}
+// endregion
+
+// region 修改用户
+
+const updateUserVisible = ref(false)
+const updateForm = ref({
+  userId: undefined,
+  userName: '',
+  userRole: undefined
+})
 const doUpdateUser = (record: any) => {
-  console.log(record)
+  updateUserVisible.value = true
+  updateForm.value = {
+    userId: record.userId,
+    userName: record.userName,
+    userRole: record.userRole
+  }
+}
+const updateUserHandleCancel = () => {
+  updateUserVisible.value = false
+  updateForm.value = {
+    userId: undefined,
+    userName: '',
+    userRole: undefined
+  }
+}
+
+const updateUserHandleOk = async () => {
+  if (updateForm.value.userName === '') {
+    Message.error('用户名不能为空')
+    return
+  }
+  if (updateForm.value.userRole === undefined) {
+    Message.error('角色不能为空')
+    return
+  }
+  const res = await UserControllerService.updateUser(updateForm.value)
+  if (res.code === 0) {
+    Message.success('修改成功')
+    updateUserVisible.value = false
+    updateForm.value = {
+      userId: undefined,
+      userName: '',
+      userRole: undefined
+    }
+    fetchData()
+  } else {
+    Message.error('修改失败' + res.message)
+  }
 }
 </script>
 
@@ -124,14 +217,6 @@ const doUpdateUser = (record: any) => {
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item field="number" label="编号">
-                  <a-input
-                    v-model="searchParams.userName"
-                    placeholder="请输入编号"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
                 <a-form-item field="name" label="用户名">
                   <a-input
                     v-model="searchParams.userName"
@@ -142,36 +227,23 @@ const doUpdateUser = (record: any) => {
               <a-col :span="8">
                 <a-form-item field="contentType" label="角色">
                   <a-select
-                    v-model="searchParams.userName"
-                    options="contentTypeOptions"
+                    v-model="searchParams.userRole"
                     placeholder="请选择角色"
-                  />
+                  >
+                    <a-option label="管理员" :value="1"></a-option>
+                    <a-option label="用户" :value="0"></a-option>
+                  </a-select>
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item field="filterType" label="性别">
                   <a-select
-                    v-model="searchParams.userName"
-                    options="filterTypeOptions"
+                    v-model="searchParams.userGender"
                     placeholder="请选择性别"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item field="createdTime" label="创建时间">
-                  <a-range-picker
-                    v-model="searchParams.userName"
-                    style="width: 100%"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item field="status" label="状态">
-                  <a-select
-                    v-model="searchParams.userName"
-                    options="statusOptions"
-                    placeholder="请选择用户状态"
-                  />
+                  >
+                    <a-option label="男" :value="0"></a-option>
+                    <a-option label="女" :value="1"></a-option>
+                  </a-select>
                 </a-form-item>
               </a-col>
             </a-row>
@@ -199,19 +271,12 @@ const doUpdateUser = (record: any) => {
       <a-row style="margin-bottom: 16px">
         <a-col :span="12" style="display: flex">
           <a-space>
-            <a-button type="primary">
+            <a-button type="primary" @click="handleClick">
               <template #icon>
                 <icon-plus />
               </template>
               {{ '新增' }}
             </a-button>
-            <a-upload action="/">
-              <template #upload-button>
-                <a-button>
-                  {{ '导入' }}
-                </a-button>
-              </template>
-            </a-upload>
           </a-space>
         </a-col>
         <a-col
@@ -263,15 +328,15 @@ const doUpdateUser = (record: any) => {
         @page-change="onPageChange"
       >
         <template #gender="{ record }">
-          <a-tag v-if="record.gender === 0" color="blue"> 男</a-tag>
-          <a-tag v-else-if="record.gender === 1" color="pink"> 女</a-tag>
-          <a-tag v-else> 未知</a-tag>
+          <a-tag v-if="record.userGender === 1" color="blue">男</a-tag>
+          <a-tag v-else-if="record.userGender === 0" color="pink">女</a-tag>
+          <a-tag v-else>未知</a-tag>
         </template>
         <template #userRole="{ record }">
-          <a-tag v-if="record.userRole === 'admin'" color="green">
+          <a-tag v-if="record.userRole === 1" color="green">
             管理员
           </a-tag>
-          <a-tag v-else-if="record.userRole == 'user'"> 用户</a-tag>
+          <a-tag v-else-if="record.userRole == 0"> 用户</a-tag>
         </template>
         <template #optional="{ record }">
           <a-space>
@@ -281,31 +346,57 @@ const doUpdateUser = (record: any) => {
               @click="doUpdateUser(record)"
             >修改
             </a-button>
-            <a-button
-              type="dashed"
-              status="danger"
-              @click="doDeleteUser(record)"
-            >删除
-            </a-button>
+            <a-popconfirm
+              content="确认删除吗?"
+              type="error"
+              position="rt"
+              @ok="doDeleteUser(record)"
+            >
+              <a-button
+                type="dashed"
+                status="danger"
+              >删除
+              </a-button>
+            </a-popconfirm>
           </a-space>
         </template>
       </a-table>
     </a-card>
   </div>
+  <a-modal v-model:visible="updateUserVisible" title="修改用户信息" @cancel="updateUserHandleCancel"
+           @ok="updateUserHandleOk">
+    <a-form :model="updateForm">
+      <a-form-item field="name" label="用户名">
+        <a-input v-model="updateForm.userName" />
+      </a-form-item>
+      <a-form-item field="post" label="角色">
+        <a-select v-model="updateForm.userRole">
+          <a-option :value="0">用户</a-option>
+          <a-option :value="1">管理员</a-option>
+        </a-select>
+      </a-form-item>
+    </a-form>
+  </a-modal>
+  <a-modal v-model:visible="visible" title="新增用户" @cancel="handleCancel" @ok="handleOk">
+    <a-form :model="form">
+      <a-form-item field="name" label="用户名">
+        <a-input v-model="form.userName" />
+      </a-form-item>
+      <a-form-item field="post" label="角色">
+        <a-select v-model="form.userRole">
+          <a-option value="0">用户</a-option>
+          <a-option value="1">管理员</a-option>
+        </a-select>
+      </a-form-item>
+      <a-typography-text>注意：密码默认为123456</a-typography-text>
+    </a-form>
+  </a-modal>
 </template>
 
 <style scoped>
 #userListView {
   min-height: 80vh;
   margin: 2px 2px 2px 2px;
-}
-
-:deep(.arco-table-th) {
-  &:last-child {
-    .arco-table-th-item-title {
-      margin-left: 16px;
-    }
-  }
 }
 
 .active {

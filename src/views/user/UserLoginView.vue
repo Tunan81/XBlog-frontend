@@ -128,7 +128,7 @@ const isShow = ref(false)
 const success = async (msg: any) => {
   isShow.value = false
   console.log('验证通过' + msg)
-  const res = await UserControllerService.userLoginUsingPost(form)
+  const res = await UserControllerService.userLogin(form)
   if (res.code === 0) {
     // 获取token保存到localStorage
     localStorage.setItem('satoken', res.data.token.tokenValue)
@@ -137,7 +137,7 @@ const success = async (msg: any) => {
     const { loginUser } = storeToRefs(userStore)
     // 如果是管理员弹出一个弹框 选择去往后台还是前台
     console.log(loginUser.value.userRole)
-    if (loginUser.value.userRole === 'admin') {
+    if (loginUser.value.userRole === 0) {
       visible.value = true
       return
     }

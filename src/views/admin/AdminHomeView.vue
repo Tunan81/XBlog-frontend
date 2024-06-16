@@ -10,7 +10,7 @@ onMounted(() => {
   const option = {
     color: ['#67F9D8', '#FFE434', '#56A3F1', '#FF917C'],
     title: {
-      text: '用户解题分析图'
+      text: '帖子分析图'
     },
     legend: {},
     radar: [
@@ -142,13 +142,13 @@ onMounted(() => {
         <CardView :name="'最近访问人数'" class="ml-2" />
       </a-col>
       <a-col :span="6">
-        <CardView :name="'做题人数'" />
+        <CardView :name="'点赞人数'" />
       </a-col>
       <a-col :span="6">
-        <CardView :name="'提交次数'" />
+        <CardView :name="'收藏次数'" />
       </a-col>
       <a-col :span="6">
-        <CardView :name="'通过总数'" />
+        <CardView :name="'帖子总数'" />
       </a-col>
       <div
         ref="myChart"

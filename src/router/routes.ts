@@ -81,7 +81,7 @@ export const routes: Array<RouteRecordRaw> = [
     ],
     meta: {
       layout: AdminLayout,
-      access: AccessEnum.ADMIN
+      //access: AccessEnum.ADMIN
     }
   },
   {

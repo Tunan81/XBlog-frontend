@@ -6,8 +6,10 @@ export type UserQueryRequest = {
     pageNumber?: number;
     id?: number;
     userName?: string;
-    userProfile?: string;
-    userRole?: string;
+    userRole?: number;
+    userGender?: number;
+    startTime?: string;
+    endTime?: string;
     pageSize?: number;
 };
 

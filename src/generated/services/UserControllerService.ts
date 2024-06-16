@@ -8,7 +8,6 @@ import type { ResultLoginUserVO } from '../models/ResultLoginUserVO';
 import type { ResultLong } from '../models/ResultLong';
 import type { ResultPageUser } from '../models/ResultPageUser';
 import type { ResultPageUserVO } from '../models/ResultPageUserVO';
-import type { ResultString } from '../models/ResultString';
 import type { ResultUser } from '../models/ResultUser';
 import type { ResultUserVO } from '../models/ResultUserVO';
 import type { UserAddRequest } from '../models/UserAddRequest';
@@ -16,29 +15,11 @@ import type { UserLoginRequest } from '../models/UserLoginRequest';
 import type { UserQueryRequest } from '../models/UserQueryRequest';
 import type { UserRegisterRequest } from '../models/UserRegisterRequest';
 import type { UserUpdateMyRequest } from '../models/UserUpdateMyRequest';
-import type { UserUpdatePasswordRequest } from '../models/UserUpdatePasswordRequest';
 import type { UserUpdateRequest } from '../models/UserUpdateRequest';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class UserControllerService {
-    /**
-     * @param requestBody
-     * @returns ResultString OK
-     * @throws ApiError
-     */
-    public static uploadAvatar(
-        requestBody?: {
-            file: Blob;
-        },
-    ): CancelablePromise<ResultString> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/user/upload/avatar',
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
     /**
      * @param requestBody
      * @returns ResultBoolean OK
@@ -50,21 +31,6 @@ export class UserControllerService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/user/update',
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-    /**
-     * @param requestBody
-     * @returns ResultBoolean OK
-     * @throws ApiError
-     */
-    public static updatePassword(
-        requestBody: UserUpdatePasswordRequest,
-    ): CancelablePromise<ResultBoolean> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/user/update/password',
             body: requestBody,
             mediaType: 'application/json',
         });

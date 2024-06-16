@@ -28,7 +28,7 @@
                 <icon-caret-down />
               </div>
               <template #content>
-                <a-doption v-if="loginUser.userRole === 'admin'">
+                <a-doption v-if="loginUser.userRole === 0">
                   <a-space @click="$router.push({ path: '/admin/home' })">
                     <icon-computer />
                     <span> 管理后台 </span>

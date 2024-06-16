@@ -3,14 +3,14 @@
 /* tslint:disable */
 /* eslint-disable */
 export type User = {
-    id?: number;
+    userId?: number;
     userAccount?: string;
     userPassword?: string;
     userName?: string;
     userAvatar?: string;
     userProfile?: string;
-    userRole?: string;
-    gender?: number;
+    userRole?: number;
+    userGender?: number;
     address?: string;
     tags?: string;
     birthday?: string;

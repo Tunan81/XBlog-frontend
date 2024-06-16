@@ -9,7 +9,7 @@ export type LoginUserVO = {
     userAvatar?: string;
     token?: SaTokenInfo;
     userProfile?: string;
-    userRole?: string;
+    userRole?: number;
     createTime?: string;
     updateTime?: string;
 };

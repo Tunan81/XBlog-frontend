@@ -6,6 +6,6 @@ export type UserAddRequest = {
     userName?: string;
     userAccount?: string;
     userAvatar?: string;
-    userRole?: string;
+    userRole?: number;
 };
 

@@ -6,7 +6,7 @@ import type { UserVO } from './UserVO';
 export type PostVO = {
     id?: number;
     title?: string;
-    category?: string;
+    categoryName?: string;
     cover?: string;
     content?: string;
     thumbNum?: number;
