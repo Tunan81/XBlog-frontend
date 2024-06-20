@@ -77,6 +77,11 @@ export const routes: Array<RouteRecordRaw> = [
         path: '/admin/post/list',
         name: '帖子列表',
         component: () => import('@/views/admin/post/PostListView.vue')
+      },
+      {
+        path: '/admin/post/categoryList',
+        name: '分类列表',
+        component: () => import('@/views/admin/post/postCategoryList.vue')
       }
     ],
     meta: {

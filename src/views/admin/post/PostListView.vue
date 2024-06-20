@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { computed, ref, watchEffect } from 'vue'
-import { PostControllerService } from '@/generated'
+import { computed, onMounted, ref, watchEffect } from 'vue'
+import { PostCategoryControllerService, PostControllerService } from '@/generated'
 import { UFold } from 'undraw-ui'
 import MdView from '@/components/mdEditor/MdView.vue'
+import { Message } from '@arco-design/web-vue'
+import AiEditor from '@/components/post/AiEditor.vue'
 
 type SizeProps = 'mini' | 'small' | 'medium' | 'large';
 const size = ref<SizeProps>('medium')
@@ -30,9 +32,7 @@ const searchParams = ref<any>({
   pageSize: 10,
   pageNumber: 1,
   userName: '',
-  content: '',
-  title: '',
-  tags: ''
+  title: ''
 })
 
 const columns = [
@@ -98,7 +98,9 @@ const reset = () => {
     pageNumber: 1
   }
 }
-
+onMounted(() => {
+  loadCategoryList()
+})
 watchEffect(() => {
   fetchData()
 })
@@ -109,8 +111,14 @@ const handleSelectDensity = (
   size.value = val as SizeProps
 }
 
-const doDeleteUser = (record: any) => {
-  console.log(record)
+const doDeletePost = async (record: any) => {
+  const res = await PostControllerService.deletePost(record.id)
+  if (res.code === 0) {
+    Message.success('删除成功')
+    await fetchData()
+  } else {
+    Message.error('删除失败' + res.message)
+  }
 }
 
 const visible = ref(false)
@@ -125,6 +133,47 @@ const handleCancel = () => {
 const viewDetails = (record: any) => {
   visible.value = true
   Content.value = record.content
+}
+
+
+// region 发布文章
+const categoryList = ref([] as any)
+const selectCategory = ref()
+const loadCategoryList = async () => {
+  const res = await PostCategoryControllerService.list()
+  if (res.code === 200) {
+    categoryList.value = res.data
+  } else {
+    Message.error('获取分类失败' + res.message)
+  }
+}
+const addPostVisible = ref(false)
+const addPostHandleClick = () => {
+  addPostVisible.value = true
+}
+const form = ref({
+  title: '',
+  content: '',
+  userId: 1, // 先写死
+  categoryId: undefined
+}) as any
+
+const getContent = (value: string) => {
+  form.value.content = value
+}
+
+const addPostHandleOk = async () => {
+  const res = await PostControllerService.addPost(form.value)
+  if (res.code === 0) {
+    Message.success('添加成功')
+  } else {
+    Message.error('添加失败' + res.message)
+  }
+  fetchData()
+}
+
+const addPostHandleCancel = () => {
+  addPostVisible.value = false
 }
 </script>
 
@@ -145,23 +194,6 @@ const viewDetails = (record: any) => {
                   <a-input
                     v-model="searchParams.title"
                     placeholder="请输入标题"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item field="content" label="内容">
-                  <a-input
-                    v-model="searchParams.userName"
-                    placeholder="请输入内容"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item field="tags" label="标签">
-                  <a-select
-                    v-model="searchParams.tags"
-                    options="contentTypeOptions"
-                    placeholder="请选择标签"
                   />
                 </a-form-item>
               </a-col>
@@ -190,31 +222,18 @@ const viewDetails = (record: any) => {
       <a-row style="margin-bottom: 16px">
         <a-col :span="12" style="display: flex">
           <a-space>
-            <a-button type="primary">
+            <a-button type="primary" @click="addPostHandleClick">
               <template #icon>
                 <icon-plus />
               </template>
               {{ '新增' }}
             </a-button>
-            <a-upload action="/">
-              <template #upload-button>
-                <a-button>
-                  {{ '导入' }}
-                </a-button>
-              </template>
-            </a-upload>
           </a-space>
         </a-col>
         <a-col
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
         >
-          <a-button>
-            <template #icon>
-              <icon-download />
-            </template>
-            {{ '下载' }}
-          </a-button>
           <a-tooltip content="刷新">
             <div class="action-icon" @click="search">
               <icon-refresh size="18" />
@@ -258,16 +277,6 @@ const viewDetails = (record: any) => {
             {{ record.content }}
           </u-fold>
         </template>
-        <template #tags="{ record }">
-          <a-space wrap>
-            <a-tag
-              v-for="(tag, index) of JSON.parse(record.tags)"
-              :key="index"
-              color="arcoblue"
-            >{{ tag }}
-            </a-tag>
-          </a-space>
-        </template>
         <template #optional="{ record }">
           <a-space>
             <a-button
@@ -279,7 +288,7 @@ const viewDetails = (record: any) => {
             <a-button
               type="dashed"
               status="danger"
-              @click="doDeleteUser(record)"
+              @click="doDeletePost(record)"
             >删除
             </a-button>
           </a-space>
@@ -293,6 +302,34 @@ const viewDetails = (record: any) => {
     </template>
     <div class="max-h-96">
       <MdView :value="Content" />
+    </div>
+  </a-modal>
+  <a-modal
+    width="auto"
+    v-model:visible="addPostVisible"
+    @ok="addPostHandleOk"
+    @cancel="addPostHandleCancel"
+  >
+    <template #title>发布博客</template>
+    <div>
+      <p>标题：</p>
+      <a-input
+        v-model="form.title"
+        placeholder="请输入标题"
+        :style="{ width: '500px' }"
+        allow-clear
+      />
+      <p>文章分类</p>
+      <a-select v-model="selectCategory" style="width: 500px">
+        <a-option
+          v-for="item of categoryList"
+          :value="item.id"
+          :label="item.name"
+          :key="item.id">
+        </a-option>
+      </a-select>
+      <p>内容：</p>
+      <AiEditor @content="getContent" style="height: 500px" />
     </div>
   </a-modal>
 </template>

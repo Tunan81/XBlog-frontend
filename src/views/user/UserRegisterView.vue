@@ -112,6 +112,7 @@ const doLogin = async () => {
 .form {
   display: flex;
   flex-direction: column;
+  margin-left: 40%;
   gap: 10px;
   background-color: #ffffff;
   padding: 30px;

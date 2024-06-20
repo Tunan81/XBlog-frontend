@@ -5,13 +5,11 @@
 import type { DeleteRequest } from '../models/DeleteRequest';
 import type { PostAddRequest } from '../models/PostAddRequest';
 import type { PostAdminQueryRequest } from '../models/PostAdminQueryRequest';
-import type { PostQueryRequest } from '../models/PostQueryRequest';
 import type { PostUpdateRequest } from '../models/PostUpdateRequest';
 import type { ResultBoolean } from '../models/ResultBoolean';
 import type { ResultListPost } from '../models/ResultListPost';
 import type { ResultLong } from '../models/ResultLong';
 import type { ResultPagePost } from '../models/ResultPagePost';
-import type { ResultPagePostVO } from '../models/ResultPagePostVO';
 import type { ResultPostVO } from '../models/ResultPostVO';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -59,21 +57,6 @@ export class PostControllerService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/post/list/page',
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-    /**
-     * @param requestBody
-     * @returns ResultPagePostVO OK
-     * @throws ApiError
-     */
-    public static listPostVoByPage(
-        requestBody: PostQueryRequest,
-    ): CancelablePromise<ResultPagePostVO> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/post/list/page/vo',
             body: requestBody,
             mediaType: 'application/json',
         });

@@ -28,6 +28,7 @@
             帖子管理
           </template>
           <a-menu-item key="post/list">帖子列表</a-menu-item>
+          <a-menu-item key="post/categoryList">分类列表</a-menu-item>
         </a-sub-menu>
         <a-sub-menu key="3">
           <template #title>
@@ -163,6 +164,9 @@ const onClickMenuItem = (key) => {
       firstMenu.value = '帖子管理'
       switch (second) {
         case 'list':
+          secondMenu.value = '帖子列表'
+          break
+        case 'categoryList':
           secondMenu.value = '帖子列表'
           break
         default:
